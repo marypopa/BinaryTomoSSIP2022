@@ -182,7 +182,7 @@ def linear_coolingSA(sinogram, angles):
                 testImage[xCoord, yCoord] = 1 - testImage[xCoord, yCoord]
         
         T = T * T_factor
-        print(T)
+
         if c_old/c_start < r_objective:
             return testImage
 
@@ -193,9 +193,9 @@ def linear_coolingSA(sinogram, angles):
 start_time = time.time()
 fig = plt.figure(figsize=(10, 7))
 
-image = binarizeWithSize("barn-owl.png", 32)
+image = binarizeWithSize("barn-owl.png", 64)
 
-np.random.seed(100)
+np.random.seed(107)
 # number of projections
 projectionNo = 20
 
@@ -206,7 +206,7 @@ angles = np.linspace(0, 180, projectionNo)
 sinogram = radon(image, theta=angles)
 
 # noise
-noise = np.random.normal(0, 1, (sinogram.shape[0], sinogram.shape[1]))
+noise = np.random.normal(0, 3, (sinogram.shape[0], sinogram.shape[1]))
 sinogram = sinogram + noise
 
 reconstruction = linear_coolingSA(sinogram, angles)
