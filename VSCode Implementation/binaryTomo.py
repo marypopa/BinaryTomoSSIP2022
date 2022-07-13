@@ -112,6 +112,7 @@ def schedule(t, a=50, b=0.005, limit=0.000001):
     else:
         return T
 
+
 def simulated_annealing(sinogram, angles):
     # image to be adjusted
     testImage = np.zeros((sinogram.shape[0], sinogram.shape[0]))
@@ -181,17 +182,18 @@ def linear_coolingSA(sinogram, angles):
                 testImage[xCoord, yCoord] = 1 - testImage[xCoord, yCoord]
         
         T = T * T_factor
-
+        print(T)
         if c_old/c_start < r_objective:
             return testImage
 
     return testImage
 #endregion
 
+
 start_time = time.time()
 fig = plt.figure(figsize=(10, 7))
 
-image = binarizeWithSize("barn-owl.png", 64)
+image = binarizeWithSize("barn-owl.png", 32)
 
 np.random.seed(100)
 # number of projections
@@ -205,9 +207,9 @@ sinogram = radon(image, theta=angles)
 
 # noise
 noise = np.random.normal(0, 1, (sinogram.shape[0], sinogram.shape[1]))
-sinogramWNoise = sinogram + noise
+sinogram = sinogram + noise
 
-reconstruction = linear_coolingSA(sinogramWNoise, angles)
+reconstruction = linear_coolingSA(sinogram, angles)
 end_time = time.time()
 
 fig.add_subplot(1, 2, 1)
@@ -224,6 +226,5 @@ work_time = end_time - start_time
 
 comparisonReport(image, reconstruction)
 plt.show()
-
 
 print(work_time//60, ' minutes and ', work_time%60, ' seconds' )
