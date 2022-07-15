@@ -193,7 +193,7 @@ def linear_coolingSA(sinogram, angles):
 start_time = time.time()
 fig = plt.figure(figsize=(10, 7))
 
-image = binarizeWithSize("barn-owl.png", 64)
+image = binarizeWithSize("basketball-ball.png", 32)
 
 np.random.seed(107)
 # number of projections
